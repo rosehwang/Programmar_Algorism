@@ -23,13 +23,10 @@ public class CodeTest05 {
 		tempInMap.put("seven","7");
 		tempInMap.put("eight","8");
 		tempInMap.put("nine","9");
-		
-		System.out.println("str :: {} " + str);
-		
+				
 		//(1)value => key
 		 for (String key : tempInMap.keySet()) {
 	            String value = tempInMap.get(key);
-	            //System.out.println("Iterating, key: " + key);
 	            if(str.contains(key)) {
 	            	str = str.replace(key, value);
 	            }
