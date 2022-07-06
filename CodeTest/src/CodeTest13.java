@@ -16,28 +16,48 @@ public class CodeTest13 {
          */
     	String answer = "";
     	
-    	// 이걸 꼭 둘 다 HashMap으로 만들어줄 필요가 있을까?
-//    	HashMap<Integer,String> participantInMap = new HashMap<>();//참여
-//    	HashMap<Integer,String> completeInMap = new HashMap<>();//참여및완주
-//    	
-//    	for(int i=0; i<participant.length; i++) {
-//    		participantInMap.put(i+1, participant[i]);
-//    	}
-//    	
-//    	for(int i=0; i<completion.length; i++) {
-//    		completeInMap.put(i+1, completion[i]);
-//    	}
-//    	
-//    	for (Integer key : participantInMap.keySet()) {
-//    		String value = participantInMap.get(key);
-//    	    System.out.println("[key]:" + key + ", [value]:" + value);
-//    	    
-//    	    //value 중복값 체크
-//    	    
-//    	    if(!completeInMap.containsValue(value)) {
-//    	    	answer = value;
-//    	    }//동명이인 체크해줘야함.
-//    	} 
+    		   //마라토너명, 중복횟수
+    	HashMap<String,Integer> participantInMap = new HashMap<>();
+    	HashMap<String,Integer> completionInMap = new HashMap<>();
+    	
+    	/* 참여한 마라토너별 동명이인 체크 */
+    	for(int i=0; i<participant.length; i++) {
+    		if(participantInMap.containsKey(participant[i])) {//중복값 체크, 중복 건 수를 +1 해줌 
+    			   //key값이 중복인 케이스 => 중복 횟수 늘림 
+    			participantInMap.put(participant[i], (participantInMap.get(participant[i])+1));
+    		}else {//중복이 아닌 케이스 
+    			participantInMap.put(participant[i], 1);
+    		}
+    	}   	
+    	
+    	/* 완주한 마라토너별 동명이인 체크 */
+    	for(int i=0; i<completion.length; i++) {
+    		if(completionInMap.containsKey(completion[i])) {//중복값 체크, 중복 건 수를 +1 해줌 
+    			   //key값이 중복인 케이스 => 중복 횟수 늘림 
+    			completionInMap.put(completion[i], (completionInMap.get(completion[i])+1));
+    		}else {//중복이 아닌 케이스 
+    			completionInMap.put(completion[i], 1);
+    		}
+    	}  
+    	
+    	
+    	for(int i=0; i<participant.length; i++) {
+    		if(completionInMap.containsKey(participant[i])) {
+    			//마라톤 완주한 사람들 목록 
+    			int pCnt = participantInMap.get(participant[i]);//중복횟수 학인 
+    			int cCnt = completionInMap.get(participant[i]);//중복횟수 학인 
+    			
+    			if(pCnt > cCnt) {
+    				answer = participant[i];
+    			}
+    			//동일하면 동명이인 체크 필요 없음. 
+    			
+    		}else {
+    			//마라톤 완주 못한 사람
+    			//System.out.println("마라톤 완주 못 한 사람들 목록 :: {} "+participant[i]);
+    			answer = participant[i];
+    		}
+    	}
     	
         return answer;
     }
